@@ -1,7 +1,11 @@
 ---
+import { db, Author, Book } from "astro:db";
 import Layout from "../layouts/Layout.astro";
 const pageTitle = "Home";
+
+const books = await db.select().from(Book);
 ---
 
 <Layout pageTitle={pageTitle}>
+    <p>We have {books.length} books</p>
 </Layout>

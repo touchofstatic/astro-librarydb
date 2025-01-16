@@ -1,7 +1,12 @@
 ---
+import { db, Author, Book } from "astro:db";
 import Layout from "../layouts/Layout.astro";
 const pageTitle = "Authors";
+
+const authors = await db.select().from(Author);
 ---
 
 <Layout pageTitle={pageTitle}>
+    <!-- LINK TO INDIVIDUAL AUTHOR PAGE -->
+    {authors.map(({ name }) => <p>{name}</p>)}
 </Layout>
