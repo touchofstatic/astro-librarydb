@@ -1,23 +1,26 @@
 ---
-import { db, Book } from "astro:db";
+import { db, eq, Book, Author } from "astro:db";
 import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
-    const books = await db.select().from(Book);
+    const books = await db.select()
+    .from(Book)
+    .innerJoin(Author, eq(Book.authorId, Author.id));
+
+    console.log(books);
 
     return books.map((book) => ({
-        params: { id: book.id },
+        params: { id: book.Book.id },
         props: { book },
     }));
 }
 
 const { id } = Astro.params;
 const { book } = Astro.props;
-console.log(id);
 ---
 
 <Layout>
     <!-- MAKE LAYOUT FOR BOOK PAGE!!!!!!!! -->
-    <p>Title: {book.title}</p>
-    <p>Author: {book.authorId}</p>
+    <p>Title: {book.Book.title}</p>
+    <p>Author: <a href={`/authors/${book.Author.id}`}>{book.Author.name}</a></p>
 </Layout>
