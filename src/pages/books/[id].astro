@@ -6,7 +6,7 @@ export async function getStaticPaths() {
     const books = await db.select().from(Book);
 
     return books.map((book) => ({
-        params: { id: book._id },
+        params: { id: book.id },
         props: { book },
     }));
 }
@@ -19,4 +19,5 @@ console.log(id);
 <Layout>
     <!-- MAKE LAYOUT FOR BOOK PAGE!!!!!!!! -->
     <p>Title: {book.title}</p>
+    <p>Author: {book.authorId}</p>
 </Layout>

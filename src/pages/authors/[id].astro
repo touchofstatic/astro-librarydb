@@ -1,0 +1,22 @@
+---
+import { db, Author } from "astro:db";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+    const authors = await db.select().from(Author);
+
+    return authors.map((author) => ({
+        params: { id: author.id },
+        props: { author },
+    }));
+}
+
+const { id } = Astro.params;
+const { author } = Astro.props;
+console.log(id);
+---
+
+<Layout>
+    <!-- MAKE LAYOUT FOR AUTHOR PAGE!!!!!!!! -->
+    <p>Author: {author.name}</p>
+</Layout>

@@ -4,12 +4,17 @@ import Layout from "../layouts/Layout.astro";
 const pageTitle = "Books";
 
 const books = await db.select().from(Book);
-console.log(books);
 ---
 
 <Layout pageTitle={pageTitle}>
     <ul>
         <!-- LINK TO INDIVIDUAL BOOK PAGE -->
-        {books.map(({ _id, title }) => <li><a href={`/books/${_id}`}>{title}</a></li>)}
+        {
+            books.map(({ id, title }) => (
+                <li>
+                    <a href={`/books/${id}`}>{title}</a>
+                </li>
+            ))
+        }
     </ul>
 </Layout>

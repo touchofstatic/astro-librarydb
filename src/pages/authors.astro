@@ -7,8 +7,14 @@ const authors = await db.select().from(Author);
 ---
 
 <Layout pageTitle={pageTitle}>
-    <!-- LINK TO INDIVIDUAL AUTHOR PAGE -->
     <ul>
-        {authors.map(({ name }) => <li>{name}</li>)}
+        <!-- LINK TO INDIVIDUAL AUTHOR PAGE -->
+        {
+            authors.map(({ id, name }) => (
+                <li>
+                    <a href={`/authors/${id}`}>{name}</a>
+                </li>
+            ))
+        }
     </ul>
 </Layout>
