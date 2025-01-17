@@ -19,6 +19,7 @@ const Genre = defineTable({
 
 const Book = defineTable({
   columns: {
+    // id: column.number({ primaryKey: true }),
     title: column.text(),
     isbn: column.text(),
     authorId: column.number({ references: () => Author.columns.id }),

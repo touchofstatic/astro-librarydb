@@ -19,6 +19,13 @@ export default async function seed() {
 			authorId: 1,
 			title: "Vermis II",
 			isbn: "34567890"
+		},
+
+		{
+			authorId: 1,
+			title: "Berserk",
+			isbn: "3456789"
 		}
 	]);
+	
 }

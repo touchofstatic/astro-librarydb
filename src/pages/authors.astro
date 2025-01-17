@@ -8,5 +8,7 @@ const authors = await db.select().from(Author);
 
 <Layout pageTitle={pageTitle}>
     <!-- LINK TO INDIVIDUAL AUTHOR PAGE -->
-    {authors.map(({ name }) => <p>{name}</p>)}
+    <ul>
+        {authors.map(({ name }) => <li>{name}</li>)}
+    </ul>
 </Layout>

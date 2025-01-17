@@ -7,6 +7,8 @@ const books = await db.select().from(Book);
 ---
 
 <Layout pageTitle={pageTitle}>
-    <!-- LINK TO INDIVIDUAL BOOK PAGE -->
-    {books.map(({ title }) => <p>{title}</p>)}
+    <ul>
+        <!-- LINK TO INDIVIDUAL BOOK PAGE -->
+        {books.map(({ title }) => <li>{title}</li>)}
+    </ul>
 </Layout>
