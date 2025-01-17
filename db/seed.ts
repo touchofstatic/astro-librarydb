@@ -6,6 +6,9 @@ export default async function seed() {
 		{ 
 			name: "Plastiboo" 
 		},
+		{
+			name: "Kentaro Miura"
+		}
 	]);
 
 	await db.insert(Book).values([
@@ -22,7 +25,7 @@ export default async function seed() {
 		},
 
 		{
-			authorId: 1,
+			authorId: 2,
 			title: "Berserk",
 			isbn: "3456789"
 		}
