@@ -1,0 +1,29 @@
+---
+import { db, Author } from "astro:db";
+import Layout from "../layouts/Layout.astro";
+const pageTitle = "Create author";
+
+export const prerender = false;
+// or enable server mode? does this work?
+// update: I think it does
+
+if (Astro.request.method === "POST") {
+    const data = await Astro.request.formData();
+    const name = data.get("name");
+    // Do something with the data
+    await db.insert(Author).values({ name });
+}
+---
+
+<Layout pageTitle={pageTitle}>
+    <form method="POST">
+        <!-- ADD VALIDATION!!!!!!!!! -->
+        <label>
+            Name:
+            <input type="text" name="name" required />
+        </label>
+        <button>Submit</button>
+    </form>
+</Layout>
+
+<style></style>

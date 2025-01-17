@@ -12,16 +12,16 @@ const Book = defineTable({
   columns: {
     id: column.number({ primaryKey: true }),
     title: column.text(),
-    isbn: column.text(),
-    authorId: column.number({ references: () => Author.columns.id }),
+    authorId: column.number({ optional: true, references: () => Author.columns.id }),
+    // language
+    // year
+    // publisher
+    isbn: column.text({ optional: true }),
+    // format: column.text(),
+    timeAdded: column.date({ default: NOW }),
     // summary: column.text(),
 
-
-    // my extras
-    timeAdded: column.date({ default: NOW }),
-    // format: column.text(),
     // download link?
-    // language
   }
 });
 

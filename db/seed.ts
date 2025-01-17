@@ -3,8 +3,8 @@ import { db, Author, Book } from 'astro:db';
 // https://astro.build/db/seed
 export default async function seed() {
 	await db.insert(Author).values([
-		{ 
-			name: "Plastiboo" 
+		{
+			name: "Plastiboo"
 		},
 		{
 			name: "Kentaro Miura"
@@ -13,22 +13,22 @@ export default async function seed() {
 
 	await db.insert(Book).values([
 		{
-			authorId: 1,
 			title: "Vermis I",
+			authorId: 1,
 			isbn: "24375776",
 		},
 
 		{
-			authorId: 1,
 			title: "Vermis II",
+			authorId: 1,
 			isbn: "34567890"
 		},
 
 		{
-			authorId: 2,
 			title: "Berserk",
+			authorId: 2,
 			isbn: "3456789"
 		}
 	]);
-	
+
 }

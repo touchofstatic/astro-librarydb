@@ -8,7 +8,6 @@ const books = await db.select().from(Book);
 
 <Layout pageTitle={pageTitle}>
     <ul>
-        <!-- LINK TO INDIVIDUAL BOOK PAGE -->
         {
             books.map(({ id, title }) => (
                 <li>
