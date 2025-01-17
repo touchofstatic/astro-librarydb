@@ -21,6 +21,7 @@ const Book = defineTable({
     timeAdded: column.date({ default: NOW }),
     // format: column.text(),
     // download link?
+    // language
   }
 });
 
