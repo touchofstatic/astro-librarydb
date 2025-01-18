@@ -7,18 +7,35 @@ export const prerender = false;
 
 if (Astro.request.method === "POST") {
     // ADD VALIDATION!!!!!!!!!!
-    const search = await Astro.request.formData();
+    const data = await Astro.request.formData();
+    const q = data.get("q");
+    return Astro.redirect("/search/" + q);
 
-};
+    // find author in authors
+    // const lookup = await db
+    //     .select()
+    //     .from(Author)
+    //     .where(like(Author.name, q));
+    // console.log(lookup);
+    // // get all books by author
+    // let extractId = lookup.map((a) => a.id)[0];
+    // console.log(extractId);
+    // const found = await db.select().from(Book).where(eq(Book.authorId, extractId));
+
+    // IMPLEMENT SEARCH IN OTHER COLUMNS
+    // CHECK TYPES BEFORE SEARCHING IN MULTIPLE COLUMNS!!!!!!
+}
+
+// TESTING AREA
 
 const books = await db.select().from(Book);
 ---
 
 <Layout pageTitle={pageTitle}>
-    <form>
+    <form method="POST">
         <!-- VALIDATION!!!!!! -->
         <label>
-            <input type="search" name="q" required/>
+            <input type="search" name="q" required />
             <button>Search</button>
         </label>
     </form>

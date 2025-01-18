@@ -17,9 +17,11 @@ if (Astro.request.method === "POST") {
         .select()
         .from(Author)
         .where(like(Author.name, name));
-    let help = lookup.map((a) => a.id);
+    let extractId = lookup.map((a) => a.id);
     // extracted id FOR WHEN BOOKS ONLY HAVE ONE AUTHOR
-    const authorId = help[0];
+    // SEE BETTER IMPLEMENTATION IN INDEX
+    // STANDARTIZE THIS
+    const authorId = extractId[0];
 
     await db.insert(Book).values({ title, authorId, isbn });
 }
