@@ -4,23 +4,40 @@ import Layout from "../layouts/Layout.astro";
 const pageTitle = "Create author";
 
 export const prerender = false;
-// or enable server mode? does this work?
-// update: I think it does
 
+const errors = { name: "" };
 if (Astro.request.method === "POST") {
-    const data = await Astro.request.formData();
-    const name = data.get("name");
-    // Do something with the data
-    await db.insert(Author).values({ name });
+    try {
+        const data = await Astro.request.formData();
+        const name = data.get("name");
+
+        if (typeof name !== "string") {
+            errors.name += "ERROR: invalid author name.";
+        }
+        const hasErrors = Object.values(errors).some((msg) => msg);
+        if (!hasErrors) {
+            await db.insert(Author).values({ name });
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        }
+    }
 }
 ---
 
 <Layout pageTitle={pageTitle}>
     <form method="POST">
-        <!-- ADD VALIDATION!!!!!!!!! -->
+        <!-- client side validation attributes -->
         <label>
             Name:
-            <input type="text" name="name" required />
+            <input
+                type="text"
+                name="name"
+                required
+                minlength="1"
+                maxlength="100"
+            />
         </label>
         <button>Submit</button>
     </form>
