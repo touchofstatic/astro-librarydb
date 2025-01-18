@@ -1,11 +1,32 @@
 ---
-import { db, Author, Book } from "astro:db";
+import { db, like, eq, Author, Book } from "astro:db";
 import Layout from "../layouts/Layout.astro";
 const pageTitle = "Upload book";
+
+export const prerender = false;
+
+if (Astro.request.method === "POST") {
+    // ADD VALIDATION!!!!!!!!!
+    const data = await Astro.request.formData();
+    const title = data.get("title");
+    const isbn = data.get("isbn");
+
+    // author lookup
+    const name = data.get("name");
+    const lookup = await db
+        .select()
+        .from(Author)
+        .where(like(Author.name, name));
+    let help = lookup.map((a) => a.id);
+    // extracted id FOR WHEN BOOKS ONLY HAVE ONE AUTHOR
+    const authorId = help[0];
+
+    await db.insert(Book).values({ title, authorId, isbn });
+}
 ---
 
 <Layout pageTitle={pageTitle}>
-    <form>
+    <form method="POST">
         <!-- ADD VALIDATION!!!!!!!!! -->
         <label>
             Title:
@@ -13,11 +34,11 @@ const pageTitle = "Upload book";
         </label>
         <label>
             <!-- DIFFICULTY ZONE -->
-            <!-- author should be suggested as you type -->
+            <!-- author can be suggested as you type -->
             <!-- tier 1: if none, return error -->
             <!-- tier 2: if none, create author automatically -->
             Author:
-            <input type="text" name="author" />
+            <input type="text" name="name" />
         </label>
         <label>
             ISBN:
@@ -31,4 +52,10 @@ const pageTitle = "Upload book";
 </Layout>
 
 <style>
+    form {
+        display: grid;
+    }
+    button {
+        width: 200px;
+    }
 </style>

@@ -1,11 +1,27 @@
 ---
-import { db, Author, Book } from "astro:db";
+import { db, like, eq, Author, Book } from "astro:db";
 import Layout from "../layouts/Layout.astro";
 const pageTitle = "Home";
+
+export const prerender = false;
+
+if (Astro.request.method === "POST") {
+    // ADD VALIDATION!!!!!!!!!!
+    const search = await Astro.request.formData();
+
+};
 
 const books = await db.select().from(Book);
 ---
 
 <Layout pageTitle={pageTitle}>
+    <form>
+        <!-- VALIDATION!!!!!! -->
+        <label>
+            <input type="search" name="q" required/>
+            <button>Search</button>
+        </label>
+    </form>
+
     <p>We have {books.length} books</p>
 </Layout>
