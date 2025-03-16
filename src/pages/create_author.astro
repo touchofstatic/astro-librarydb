@@ -15,6 +15,7 @@ if (Astro.request.method === "POST") {
             errors.name += "ERROR: invalid author name.";
         }
         const hasErrors = Object.values(errors).some((msg) => msg);
+        // ALL GOOD KING
         if (!hasErrors) {
             await db.insert(Author).values({ name });
         }

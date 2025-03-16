@@ -1,19 +1,80 @@
 ---
-import { db, Author, Book } from "astro:db";
+import { db, eq, like, Author, Book } from "astro:db";
 import Layout from "../layouts/Layout.astro";
 const pageTitle = "Books";
 
 const books = await db.select().from(Book);
+const authors = await db.select().from(Author);
+
+const rows = await db
+    .select()
+    .from(Book)
+    .innerJoin(Author, eq(Book.authorId, Author.id));
 ---
 
 <Layout pageTitle={pageTitle}>
-    <ul>
-        {
-            books.map(({ id, title }) => (
-                <li>
-                    <a href={`/books/${id}`}>{title}</a>
-                </li>
-            ))
-        }
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Author</th>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            {
+                rows.map(({ Book, Author }) => (
+                    <tr>
+                        <td>
+                            <a href={`/authors/${Author.id}`}>{Author.name}</a>
+                        </td>
+                        <td>
+                            <a href={`/books/${Book.id}`}>{Book.title}</a>
+                            <div class="isbn">ISBN: {Book.isbn}</div>
+                        </td>
+                    </tr>
+                ))
+            }
+            <tr>
+                <td>test 1</td>
+                <td>test 2</td>
+            </tr>
+        </tbody>
+    </table>
 </Layout>
+
+<style>
+    table {
+        table-layout: fixed;
+        width: 90%;
+    }
+
+    table,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    th {
+        background-color: lightgray;
+        text-align: left;
+    }
+
+    th,
+    td {
+        padding: 4px;
+        vertical-align: top;
+    }
+
+    thead th:nth-child(1) {
+        width: 30%;
+    }
+
+    thead th:nth-child(2) {
+    }
+
+    .isbn {
+        color: green;
+        font-size: small;
+    }
+</style>

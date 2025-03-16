@@ -18,7 +18,6 @@ const books = await db.select().from(Book).where(like(Book.authorId, id));
 ---
 
 <Layout>
-    <!-- MAKE LAYOUT FOR AUTHOR PAGE!!!!!!!! -->
     <p>Author: {author.name}</p>
 
     <ul>
@@ -31,7 +30,4 @@ const books = await db.select().from(Book).where(like(Book.authorId, id));
         }
     </ul>
 
-    <p>tier 1: list of their books</p>
-    <p>tier 2: link to table of their books</p>
-    <!-- add comment section??!! -->
 </Layout>

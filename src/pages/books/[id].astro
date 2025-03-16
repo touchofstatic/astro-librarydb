@@ -3,9 +3,10 @@ import { db, eq, Book, Author } from "astro:db";
 import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
-    const books = await db.select()
-    .from(Book)
-    .innerJoin(Author, eq(Book.authorId, Author.id));
+    const books = await db
+        .select()
+        .from(Book)
+        .innerJoin(Author, eq(Book.authorId, Author.id));
 
     return books.map((book) => ({
         params: { id: book.Book.id },
@@ -18,7 +19,6 @@ const { book } = Astro.props;
 ---
 
 <Layout>
-    <!-- MAKE LAYOUT FOR BOOK PAGE!!!!!!!! -->
     <p>Title: {book.Book.title}</p>
     <p>Author: <a href={`/authors/${book.Author.id}`}>{book.Author.name}</a></p>
 </Layout>

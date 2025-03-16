@@ -27,9 +27,16 @@ if (Astro.request.method === "POST") {
                 .select()
                 .from(Author)
                 .where(like(Author.name, name));
-            const authorId = lookup.map((a) => a.id)[0];
 
-            await db.insert(Book).values({ title, authorId, isbn });
+            console.log(lookup);
+            // IF LOOKUP EMPTY:
+            if (lookup.length === 0) {
+                await db.insert(Author).values({ name });
+                // NEED TO GET ID AND INSERT WITH THE NEW AUTHOR'S NEW ID
+            } else {
+                const authorId = lookup.map((a) => a.id)[0];
+                await db.insert(Book).values({ title, authorId, isbn });
+            }
         }
     } catch (error) {
         if (error instanceof Error) {
@@ -44,12 +51,15 @@ if (Astro.request.method === "POST") {
     <form method="POST">
         <label>
             Title:
-            <input type="text" name="title" required minlength="1" maxlength="100" />
+            <input
+                type="text"
+                name="title"
+                required
+                minlength="1"
+                maxlength="100"
+            />
         </label>
         <label>
-            <!-- tier 1: if none, return error -->
-            <!-- tier 2: if none, create new author automatically -->
-            <!-- tier 3: asks if you would like to create author -->
             Author:
             <input type="text" name="name" minlength="1" maxlength="100" />
         </label>
@@ -58,9 +68,6 @@ if (Astro.request.method === "POST") {
             <input type="text" name="isbn" />
         </label>
 
-        <!-- high diff: -->
-        <!-- file upload -->
-        <!-- image upload -->
         <button>Upload</button>
     </form>
 </Layout>
