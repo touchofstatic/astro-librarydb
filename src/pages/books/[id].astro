@@ -1,6 +1,7 @@
 ---
 import { db, eq, Book, Author } from "astro:db";
-import Layout from "../../layouts/Layout.astro";
+import GlobalLayout from "../../layouts/GlobalLayout.astro";
+import BookLayout from "../../layouts/BookLayout.astro";
 
 export async function getStaticPaths() {
     const books = await db
@@ -18,7 +19,13 @@ const { id } = Astro.params;
 const { book } = Astro.props;
 ---
 
-<Layout>
+<!-- 
+old ver without book layout.astro
+ <Layout>
     <p>Title: {book.Book.title}</p>
     <p>Author: <a href={`/authors/${book.Author.id}`}>{book.Author.name}</a></p>
-</Layout>
+</Layout>  -->
+
+
+<BookLayout frontmatter={book}>
+</BookLayout>

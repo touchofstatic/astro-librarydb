@@ -1,6 +1,6 @@
 ---
 import { db, eq, like, Author, Book } from "astro:db";
-import Layout from "../layouts/Layout.astro";
+import GlobalLayout from "../layouts/GlobalLayout.astro";
 const pageTitle = "Books";
 
 const books = await db.select().from(Book);
@@ -12,7 +12,7 @@ const rows = await db
     .innerJoin(Author, eq(Book.authorId, Author.id));
 ---
 
-<Layout pageTitle={pageTitle}>
+<GlobalLayout pageTitle={pageTitle}>
     <table>
         <thead>
             <tr>
@@ -40,7 +40,7 @@ const rows = await db
             </tr>
         </tbody>
     </table>
-</Layout>
+</GlobalLayout>
 
 <style>
     table {

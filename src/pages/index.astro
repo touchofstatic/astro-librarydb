@@ -1,6 +1,6 @@
 ---
 import { db, like, eq, Author, Book } from "astro:db";
-import Layout from "../layouts/Layout.astro";
+import GlobalLayout from "../layouts/GlobalLayout.astro";
 const pageTitle = "Home";
 
 export const prerender = false;
@@ -8,7 +8,7 @@ export const prerender = false;
 const books = await db.select().from(Book);
 ---
 
-<Layout pageTitle={pageTitle}>
+<GlobalLayout pageTitle={pageTitle}>
     <form>
         <!-- VALIDATION!!!!!! -->
          <!-- doesn't do anything -->
@@ -19,4 +19,4 @@ const books = await db.select().from(Book);
     </form>
 
     <p>We have {books.length} books</p>
-</Layout>
+</GlobalLayout>
