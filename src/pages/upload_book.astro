@@ -1,6 +1,6 @@
 ---
 import { db, like, eq, Author, Book } from "astro:db";
-import Layout from "../layouts/Layout.astro";
+import GlobalLayout from "../layouts/GlobalLayout.astro";
 const pageTitle = "Upload book";
 
 export const prerender = false;
@@ -46,7 +46,7 @@ if (Astro.request.method === "POST") {
 }
 ---
 
-<Layout pageTitle={pageTitle}>
+<GlobalLayout pageTitle={pageTitle}>
     <!-- client side validation attributes -->
     <form method="POST">
         <label>
@@ -70,7 +70,7 @@ if (Astro.request.method === "POST") {
 
         <button>Upload</button>
     </form>
-</Layout>
+</GlobalLayout>
 
 <style>
     form {

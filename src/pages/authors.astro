@@ -1,12 +1,12 @@
 ---
 import { db, Author, Book } from "astro:db";
-import Layout from "../layouts/Layout.astro";
+import GlobalLayout from "../layouts/GlobalLayout.astro";
 const pageTitle = "Authors";
 
 const authors = await db.select().from(Author);
 ---
 
-<Layout pageTitle={pageTitle}>
+<GlobalLayout pageTitle={pageTitle}>
     <ul>
         {
             authors.map(({ id, name }) => (
@@ -16,4 +16,4 @@ const authors = await db.select().from(Author);
             ))
         }
     </ul>
-</Layout>
+</GlobalLayout>

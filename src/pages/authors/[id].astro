@@ -1,6 +1,6 @@
 ---
 import { db, like, Book, Author } from "astro:db";
-import Layout from "../../layouts/Layout.astro";
+import GlobalLayout from "../../layouts/GlobalLayout.astro";
 
 export async function getStaticPaths() {
     const authors = await db.select().from(Author);
@@ -17,7 +17,7 @@ const { author } = Astro.props;
 const books = await db.select().from(Book).where(like(Book.authorId, id));
 ---
 
-<Layout>
+<GlobalLayout>
     <p>Author: {author.name}</p>
 
     <ul>
@@ -30,4 +30,4 @@ const books = await db.select().from(Book).where(like(Book.authorId, id));
         }
     </ul>
 
-</Layout>
+</GlobalLayout>
