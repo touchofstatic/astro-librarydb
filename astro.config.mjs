@@ -5,8 +5,12 @@ import db from '@astrojs/db';
 
 import netlify from '@astrojs/netlify';
 
+import pagefind from "astro-pagefind";
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [db()],
-  adapter: netlify()
+  integrations: [db(),
+      pagefind(),
+  ],
+  adapter: netlify(),
 });
