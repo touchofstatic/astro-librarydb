@@ -1,0 +1,24 @@
+---
+// ONLY FOR TESTING
+import { db, like, eq, Book } from "astro:db";
+
+export const prerender = false;
+---
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+    </head>
+
+    <body>
+        <form action="/books">
+            <!-- <form action="/searchresults"> -->
+            <label>
+                <input type="search" name="q" minlength="3" />
+                <button>Search</button>
+            </label>
+        </form>
+    </body>
+</html>

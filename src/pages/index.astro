@@ -9,12 +9,41 @@ const books = await db.select().from(Book);
 ---
 
 <GlobalLayout pageTitle={pageTitle}>
-    <form>
-         <!-- doesn't do anything -->
+    <form action="/books" method="GET" autocomplete="off">
+        <!-- <form action="/books"> -->
         <label>
-            <input type="search" name="q" required />
+            <input type="search" name="q" minlength="3" />
             <button>Search</button>
         </label>
+
+        <fieldset>
+            <legend>Search books in:</legend>
+            <div>
+                <!-- <input
+                    type="radio"
+                    id="column-all"
+                    name="column"
+                    value="all"
+                    checked
+                />
+                <label for="seach-all">All</label> -->
+                <input
+                    type="radio"
+                    id="column-title"
+                    name="column"
+                    value="title"
+                    checked
+                />
+                <label for="seach-title">Title</label>
+                <input
+                    type="radio"
+                    id="column-author"
+                    name="column"
+                    value="author"
+                />
+                <label for="seach-author">Author</label>
+            </div>
+        </fieldset>
     </form>
 
     <p>We have {books.length} books</p>

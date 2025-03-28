@@ -3,13 +3,52 @@ import { db, eq, like, Author, Book } from "astro:db";
 import GlobalLayout from "../layouts/GlobalLayout.astro";
 const pageTitle = "Books";
 
-const books = await db.select().from(Book);
-const authors = await db.select().from(Author);
+export const prerender = false;
 
-const rows = await db
-    .select()
-    .from(Book)
-    .innerJoin(Author, eq(Book.authorId, Author.id));
+const search = Astro.url.searchParams.get("q");
+const column = Astro.url.searchParams.get("column");
+
+let rows = [];
+if (search == null) {
+    rows = await db
+        .select()
+        .from(Book)
+        .innerJoin(Author, eq(Book.authorId, Author.id));
+} else {
+    switch (column) {
+        // case "all":
+        //     const titles = await db
+        //         .select()
+        //         .from(Book)
+        //         .where(like(Book.title, `%${search}%`))
+        //         .innerJoin(Author, eq(Book.authorId, Author.id));
+        //     console.log(titles);
+
+        //     const authors = await db
+        //         .select()
+        //         .from(Author)
+        //         .where(like(Author.name, `%${search}%`))
+        //         .innerJoin(Book, eq(Book.authorId, Author.id));
+        //     console.log(authors);
+        //     break;
+
+        case "title":
+            rows = await db
+                .select()
+                .from(Book)
+                .where(like(Book.title, `%${search}%`))
+                .innerJoin(Author, eq(Book.authorId, Author.id));
+            break;
+
+        case "author":
+            rows = await db
+                .select()
+                .from(Author)
+                .where(like(Author.name, `%${search}%`))
+                .innerJoin(Book, eq(Book.authorId, Author.id));
+            break;
+    }
+}
 ---
 
 <GlobalLayout pageTitle={pageTitle}>
