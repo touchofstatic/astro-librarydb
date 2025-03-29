@@ -6,7 +6,7 @@ const pageTitle = "Authors";
 const authors = await db.select().from(Author);
 ---
 
-<GlobalLayout pageTitle={pageTitle}>
+<GlobalLayout>
     <p>This page should be a list of authors for managing records. <br />
     Not to be accessed by users or linked to.</p>
     <ul>

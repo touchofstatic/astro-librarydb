@@ -19,13 +19,5 @@ const { id } = Astro.params;
 const { book } = Astro.props;
 ---
 
-<!-- 
-old ver without book layout.astro
- <Layout>
-    <p>Title: {book.Book.title}</p>
-    <p>Author: <a href={`/authors/${book.Author.id}`}>{book.Author.name}</a></p>
-</Layout>  -->
-
-
 <BookLayout frontmatter={book}>
 </BookLayout>

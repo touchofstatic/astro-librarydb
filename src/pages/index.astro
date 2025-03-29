@@ -2,23 +2,20 @@
 import { db, like, eq, Author, Book } from "astro:db";
 import GlobalLayout from "../layouts/GlobalLayout.astro";
 import SearchBar from "../components/SearchBar.astro";
-import Greeting from '../components/Greeting';
-
-
+import Greeting from "../components/Greeting";
 const pageTitle = "Home";
 
 export const prerender = false;
-
 const books = await db.select().from(Book);
 ---
 
-<GlobalLayout pageTitle={pageTitle}>
-    <SearchBar />
-    <p>We have <strong>{books.length}</strong> books! Awesome!</p>
-    <Greeting client:load messages={["ᓚ₍ ^. .^₎", "ദ്ദി ˉ͈̀꒳ˉ͈́ )✧", "( ˶°ㅁ°) !!",
-    " ୧ ‧₊˚ ☕ ⋅‧₊˚ ୧", "( • ̀ω•́ )✧", "( ˶˘ ³˘(ˊᗜˋ*)!♡", "∘ ∘ ∘ ( °ヮ° ) ?", "(´⊙ω⊙`)ᵒᵐᵍᵎᵎᵎ",
-    "(⸝⸝ᴗ_ᴗ⸝⸝) z z 𐰁", "ฅ^._.^ฅ", "(っ ͡ ͡º - ͡ ͡º ς)", " ‧₊˚ ٩(ˊᗜˋ)و🏳️‍🌈♡ ⋅ ‧₊˚",
-    "✿♬ﾟ+.(｡◡‿◡)♪.+ﾟ♬✿。", "✧ ─=≡Σ((( つ•̀ω•́)つ", "٩(*•͈ ꇴ •͈*)و ̑̑❀", "(￣▽￣*)ゞ",
-    "(ง ͡ʘ ͜ʖ ͡ʘ)ง", "(･＿･)( ･_)(　･)(　　)(･　)(_･ )(･＿･)", "(´-ι_-｀)", "✧(🝦言🝦╬)",
-  ]} />
+<GlobalLayout>
+    <article>
+        <SearchBar />
+        <p>We have <strong>{books.length}</strong> books! Awesome!</p>
+    </article>
 </GlobalLayout>
+
+
+<style>
+</style>

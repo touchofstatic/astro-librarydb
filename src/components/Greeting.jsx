@@ -1,3 +1,5 @@
+// 1) can this be accessible for screen reader?
+// 2) container fixed area as to not move surrounding elements?
 import { useState } from 'preact/hooks';
 
 export default function Greeting({ messages }) {
@@ -8,7 +10,7 @@ export default function Greeting({ messages }) {
 
   return (
     <div>
-      <h3 style="text-wrap:balance">{greeting}</h3>
+      <p>{greeting}</p>
       <button
         onClick={() => setGreeting(randomMessage())}>
         New Greeting
