@@ -7,12 +7,12 @@ export default function Greeting({ messages }) {
   const [greeting, setGreeting] = useState(messages[0]);
 
   return (
-    <p>
+    <div>
       <h3 style="text-wrap:balance">{greeting}</h3>
       <button
         onClick={() => setGreeting(randomMessage())}>
         New Greeting
       </button>
-    </p>
+    </div>
   );
 }
