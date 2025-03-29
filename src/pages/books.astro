@@ -1,6 +1,7 @@
 ---
 import { db, eq, like, Author, Book } from "astro:db";
 import GlobalLayout from "../layouts/GlobalLayout.astro";
+import SearchBar from "../components/SearchBar.astro";
 const pageTitle = "Books";
 
 export const prerender = false;
@@ -16,22 +17,6 @@ if (search == null) {
         .innerJoin(Author, eq(Book.authorId, Author.id));
 } else {
     switch (column) {
-        // case "all":
-        //     const titles = await db
-        //         .select()
-        //         .from(Book)
-        //         .where(like(Book.title, `%${search}%`))
-        //         .innerJoin(Author, eq(Book.authorId, Author.id));
-        //     console.log(titles);
-
-        //     const authors = await db
-        //         .select()
-        //         .from(Author)
-        //         .where(like(Author.name, `%${search}%`))
-        //         .innerJoin(Book, eq(Book.authorId, Author.id));
-        //     console.log(authors);
-        //     break;
-
         case "title":
             rows = await db
                 .select()
@@ -52,6 +37,8 @@ if (search == null) {
 ---
 
 <GlobalLayout pageTitle={pageTitle}>
+    <SearchBar />
+
     <table>
         <thead>
             <tr>
@@ -64,7 +51,18 @@ if (search == null) {
                 rows.map(({ Book, Author }) => (
                     <tr>
                         <td>
-                            <a href={`/authors/${Author.id}`}>{Author.name}</a>
+                            <a
+                                href={
+                                    `/books?` +
+                                    `${new URLSearchParams({
+                                        // q: Author.name.toLowerCase(),
+                                        q: Author.name,
+                                        column: "author",
+                                    })}`
+                                }
+                            >
+                                {Author.name}
+                            </a>
                         </td>
                         <td>
                             <a href={`/books/${Book.id}`}>{Book.title}</a>

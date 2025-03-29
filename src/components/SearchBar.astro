@@ -1,0 +1,42 @@
+---
+
+---
+<style>
+    #searchfield {
+        width: 450px;
+    }
+    
+    fieldset {
+        /* border-style: none; */
+        width: 450px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+</style>
+
+<form action="/books" method="GET" autocomplete="off">
+    <label>
+        <input type="search" name="q" minlength="3" id="searchfield" />
+        <button>Search</button>
+    </label>
+    <fieldset>
+        <legend>Search books in:</legend>
+        <div>
+            <input
+                type="radio"
+                id="column-title"
+                name="column"
+                value="title"
+                checked
+            />
+            <label for="column-title">Title</label>
+            <input
+                type="radio"
+                id="column-author"
+                name="column"
+                value="author"
+            />
+            <label for="column-author">Author</label>
+        </div>
+    </fieldset>
+</form>

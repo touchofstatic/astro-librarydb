@@ -13,7 +13,10 @@ export default async function seed() {
 			name: "Person 3"
 		},
 		{
-			name: "Guy 1"
+			name: "Guy"
+		},
+		{
+			name: "person 1"
 		}
 	]);
 
@@ -21,43 +24,49 @@ export default async function seed() {
 		{
 			title: "Book 1",
 			authorId: 1,
-			isbn: "24375776",
+			isbn: "0000",
 		},
 
 		{
 			title: "Book 2",
 			authorId: 1,
-			isbn: "34567890"
+			isbn: "0054"
 		},
 
 		{
-			title: "book 3",
+			title: "book 3 - lowecase title",
 			authorId: 2,
-			isbn: "64687"
+			isbn: "0067"
 		},
 
 		{
-			title: "Book 1",
+			title: "Book 1 - same title and diff author",
 			authorId: 2,
-			isbn: "668509"
+			isbn: "0022"
 		},
 
 		{
 			title: "buk",
 			authorId: 4,
-			isbn: "654566"
+			isbn: "00354"
 		},
 
 		{
-			title: "guy",
+			title: "guy - word found in the title and the author",
 			authorId: 4,
-			isbn: "4645645"
+			isbn: "00458"
 		},
 
 		{
-			title: "guy",
+			title: "guy - word found in the title and other author",
 			authorId: 2,
-			isbn: "3456789"
+			isbn: "0057"
+		},
+
+		{
+			title: "book - author case insensitive search vs author id 1",
+			authorId: 5,
+			isbn: "0065"
 		},
 	]);
 

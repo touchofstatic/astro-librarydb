@@ -18,6 +18,11 @@ const books = await db.select().from(Book).where(like(Book.authorId, id));
 ---
 
 <GlobalLayout>
+    <p>
+        This page should be for managing authors' records. <br />
+        Not to be accessed by users or linked to.
+    </p>
+
     <p>Author: {author.name}</p>
 
     <ul>
@@ -29,5 +34,4 @@ const books = await db.select().from(Book).where(like(Book.authorId, id));
             ))
         }
     </ul>
-
 </GlobalLayout>
