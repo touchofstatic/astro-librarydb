@@ -4,7 +4,7 @@ import GlobalLayout from "./GlobalLayout.astro";
 const { frontmatter } = Astro.props;
 
 import { Image } from "astro:assets";
-import coverPlaceholder from "../assets/coverplaceholder.jpg";
+import coverPlaceholder from "../assets/book-placeholder.png";
 ---
 
 <GlobalLayout>
@@ -34,6 +34,10 @@ import coverPlaceholder from "../assets/coverplaceholder.jpg";
                 <tr>
                     <td>ID:</td>
                     <td>{frontmatter.Book.id}</td>
+                </tr>
+                <tr>
+                    <td>Time added:</td>
+                    <td>{frontmatter.Book.timeAdded.toISOString().replace("T"," ").substring(0, 19)}</td>
                 </tr>
                 <tr> <td>Description: </td></tr>
 
@@ -80,8 +84,9 @@ import coverPlaceholder from "../assets/coverplaceholder.jpg";
     }
 
     img {
-        max-height: 300px;
-        width: auto;
+        /* max-height: 300px; */
+        height: auto;
+        width: 240px;
         border: 1px black solid;
         margin-right: 10px;
     }
