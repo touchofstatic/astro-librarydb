@@ -1,11 +1,14 @@
 ---
 import { db, like, eq, Author, Book } from "astro:db";
+import { sql } from "drizzle-orm";
 import GlobalLayout from "../layouts/GlobalLayout.astro";
 const pageTitle = "Upload book";
 
 export const prerender = false;
 
 const errors = { title: "", name: "", isbn: "" };
+let message = "";
+
 if (Astro.request.method === "POST") {
     try {
         const data = await Astro.request.formData();
@@ -47,6 +50,14 @@ if (Astro.request.method === "POST") {
 ---
 
 <GlobalLayout pageTitle={pageTitle}>
+    <p>
+        Note: Authors with the same name share the same id.<br />
+        <small
+            >The site owner isn't a certified librarian. It can't be helped.
+            Sorry.</small
+        >
+    </p>
+
     <!-- client side validation attributes -->
     <form method="POST">
         <label>
@@ -70,6 +81,8 @@ if (Astro.request.method === "POST") {
 
         <button>Upload</button>
     </form>
+
+    <p id="message">{message}</p>
 </GlobalLayout>
 
 <style>
