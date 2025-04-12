@@ -16,7 +16,7 @@ export default async function seed() {
 			name: "Guy"
 		},
 		{
-			name: "person 1"
+			name: "person 1 formerly"
 		}
 	]);
 
@@ -24,7 +24,7 @@ export default async function seed() {
 		{
 			title: "Book 1",
 			authorId: 1,
-			isbn: "0000",
+			isbn: "0001",
 		},
 
 		{
@@ -64,7 +64,7 @@ export default async function seed() {
 		},
 
 		{
-			title: "book - author case insensitive search vs author id 1",
+			title: "book - author case insensitive search. Deprecated: author names are unique and case insensitive",
 			authorId: 5,
 			isbn: "0065"
 		},

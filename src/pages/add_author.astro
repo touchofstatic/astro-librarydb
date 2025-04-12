@@ -19,7 +19,6 @@ if (Astro.request.method === "POST") {
             errors.name += "ERROR: invalid author name.";
         }
         const hasErrors = Object.values(errors).some((msg) => msg);
-        // ALL GOOD KING
 
         if (!hasErrors) {
             let exists = [];
@@ -36,7 +35,7 @@ if (Astro.request.method === "POST") {
                 message = "Author with this name already exists.";
             } else {
                 await db.insert(Author).values({ name });
-                message = "Author created!";
+                message = "Author added successfully.";
             }
         }
     } catch (error) {

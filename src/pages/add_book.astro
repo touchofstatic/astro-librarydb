@@ -2,6 +2,8 @@
 import { db, like, eq, Author, Book } from "astro:db";
 import { sql } from "drizzle-orm";
 import GlobalLayout from "../layouts/GlobalLayout.astro";
+import { notFound } from "astro:i18n";
+import Id from "./authors/[id].astro";
 const pageTitle = "Upload book";
 
 export const prerender = false;
@@ -20,26 +22,44 @@ if (Astro.request.method === "POST") {
         if (typeof title !== "string" || title.length < 1) {
             errors.title += "ERROR: invalid title.";
         }
-        if (typeof name !== "string") {
+        // TEMPORARY
+        if (typeof name !== "string" || name.length < 1) {
             errors.name += "ERROR: invalid author name.";
         }
+        // how to validate isbn?
         const hasErrors = Object.values(errors).some((msg) => msg);
+
         if (!hasErrors) {
-            // author lookup
-            const lookup = await db
+            // 1) if input author name
+            // RIGHT NOW EVERYTHING ONLY WORKS ASSUMING ANY BOOK HAS AN AUTHOR
+            let authorId;
+            // 2) author check
+            let exists = [];
+            // find author name
+            exists = await db
                 .select()
                 .from(Author)
-                .where(like(Author.name, name));
+                .where(eq(Author.name, `${name}`).append(sql` COLLATE NOCASE`));
 
-            console.log(lookup);
-            // IF LOOKUP EMPTY:
-            if (lookup.length === 0) {
-                await db.insert(Author).values({ name });
-                // NEED TO GET ID AND INSERT WITH THE NEW AUTHOR'S NEW ID
-            } else {
-                const authorId = lookup.map((a) => a.id)[0];
-                await db.insert(Book).values({ title, authorId, isbn });
+            // - if author found get id
+            if (exists.length !== 0) {
+                authorId = exists.map((a) => a.id)[0];
             }
+            // - if author not found create and get id with message
+            else {
+                const insertedAuthor = await db
+                    .insert(Author)
+                    .values({ name })
+                    .returning({ insertedId: Author.id });
+                authorId = insertedAuthor.map((a) => a.insertedId)[0];
+                message = "Author with this name not found! Added new author.";
+            }
+            // 3) insert input title, author id, isbn to book entry
+            await db.insert(Book).values({ title, authorId, isbn });
+
+            // 4) success message
+            message += "Book added successfully.";
+            // 4.1) with link to book?
         }
     } catch (error) {
         if (error instanceof Error) {
