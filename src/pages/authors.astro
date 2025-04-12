@@ -7,8 +7,11 @@ const authors = await db.select().from(Author);
 ---
 
 <GlobalLayout>
-    <p>This page should be a list of authors for managing records. <br />
-    Not to be accessed by users or linked to.</p>
+    <p>
+        This page is for managing author records. <br />
+        Not to accessed by users.
+    </p>
+    
     <ul>
         {
             authors.map(({ id, name }) => (

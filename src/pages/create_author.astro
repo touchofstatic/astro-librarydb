@@ -1,11 +1,15 @@
 ---
-import { db, Author } from "astro:db";
+import { db, like, eq, Author } from "astro:db";
+import { sql } from "drizzle-orm";
 import GlobalLayout from "../layouts/GlobalLayout.astro";
+import Authors from "./authors.astro";
 const pageTitle = "Create author";
 
 export const prerender = false;
 
 const errors = { name: "" };
+let message = "";
+
 if (Astro.request.method === "POST") {
     try {
         const data = await Astro.request.formData();
@@ -16,8 +20,24 @@ if (Astro.request.method === "POST") {
         }
         const hasErrors = Object.values(errors).some((msg) => msg);
         // ALL GOOD KING
+
         if (!hasErrors) {
-            await db.insert(Author).values({ name });
+            let exists = [];
+            exists = await db
+                .select()
+                .from(Author)
+                // like fails on "aaaaa", "aaa"
+                // .where(like(Author.name, `%${name}`));
+                // eq is case sensitive. fails on "aaaaa", "AAAAAA"
+                // .where(eq(Author.name, `${name}`));
+                .where(eq(Author.name, `${name}`).append(sql` COLLATE NOCASE`));
+
+            if (exists.length !== 0) {
+                message = "Author with this name already exists.";
+            } else {
+                await db.insert(Author).values({ name });
+                message = "Author created!";
+            }
         }
     } catch (error) {
         if (error instanceof Error) {
@@ -28,6 +48,19 @@ if (Astro.request.method === "POST") {
 ---
 
 <GlobalLayout>
+    <p>
+        This page is for managing author records. <br />
+        Not to accessed by users.
+    </p>
+
+    <p>
+        Note: Authors with the same name share the same id.<br />
+        <small
+            >The site owner isn't a certified librarian. It can't be helped.
+            Sorry.</small
+        >
+    </p>
+
     <form method="POST">
         <!-- client side validation attributes -->
         <label>
@@ -42,6 +75,6 @@ if (Astro.request.method === "POST") {
         </label>
         <button>Submit</button>
     </form>
-</GlobalLayout>
 
-<style></style>
+    <p id="message">{message}</p>
+</GlobalLayout>

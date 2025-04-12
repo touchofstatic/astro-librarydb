@@ -19,8 +19,8 @@ const books = await db.select().from(Book).where(like(Book.authorId, id));
 
 <GlobalLayout>
     <p>
-        This page should be for managing authors' records. <br />
-        Not to be accessed by users or linked to.
+        This page is for managing author records. <br />
+        Not to accessed by users.
     </p>
 
     <p>Author: {author.name}</p>
