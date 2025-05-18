@@ -18,7 +18,7 @@ const books = await db.select().from(Book).where(like(Book.authorId, id));
 ---
 
 <GlobalLayout>
-    <p>
+    <p class="author-warning">
         This page is for managing author records. <br />
         Not to accessed by users.
     </p>
@@ -35,3 +35,9 @@ const books = await db.select().from(Book).where(like(Book.authorId, id));
         }
     </ul>
 </GlobalLayout>
+
+<style>
+    .author-warning {
+        color: firebrick;
+    }
+</style>

@@ -9,7 +9,8 @@ const pageTitle = "Upload book";
 export const prerender = false;
 
 const errors = { title: "", name: "", isbn: "" };
-let message = "";
+let authorMessage,
+    statusMessage = "";
 
 if (Astro.request.method === "POST") {
     try {
@@ -52,13 +53,14 @@ if (Astro.request.method === "POST") {
                     .values({ name })
                     .returning({ insertedId: Author.id });
                 authorId = insertedAuthor.map((a) => a.insertedId)[0];
-                message = "Author with this name not found! Added new author.";
+                authorMessage =
+                    "Author with this name not found! Added new author.";
             }
             // 3) insert input title, author id, isbn to book entry
             await db.insert(Book).values({ title, authorId, isbn });
 
             // 4) success message
-            message += "Book added successfully.";
+            statusMessage = "Book added successfully.";
             // 4.1) with link to book?
         }
     } catch (error) {
@@ -70,46 +72,81 @@ if (Astro.request.method === "POST") {
 ---
 
 <GlobalLayout pageTitle={pageTitle}>
-    <p>
-        Note: Authors with the same name share the same id.<br />
-        <small
-            >The site owner isn't a certified librarian. It can't be helped.
-            Sorry.</small
-        >
-    </p>
+        <p>
+            Note: Authors with the same name share the same id.<br />
+            <small
+                >The site owner isn't a certified librarian. It can't be helped.
+                Sorry.</small
+            >
+        </p>
 
-    <!-- client side validation attributes -->
-    <form method="POST">
-        <label>
-            Title:
+        <article>
+
+        <!-- client side validation attributes -->
+        <form method="POST" autocomplete="off">
+            <!-- <span> -->
+            <label for="title"> Title: </label>
             <input
                 type="text"
                 name="title"
+                id="title"
                 required
                 minlength="1"
                 maxlength="100"
             />
-        </label>
-        <label>
-            Author:
-            <input type="text" name="name" minlength="1" maxlength="100" />
-        </label>
-        <label>
-            ISBN:
-            <input type="text" name="isbn" />
-        </label>
+            <!-- </span> -->
 
-        <button>Upload</button>
-    </form>
+            <!-- <span> -->
+            <label for="name"> Author: </label>
+            <input
+                type="text"
+                name="name"
+                id="name"
+                minlength="1"
+                maxlength="100"
+            />
+            <!-- </span> -->
 
-    <p id="message">{message}</p>
+            <!-- <span> -->
+            <label for="isbn"> ISBN: </label>
+            <input type="text" name="isbn" id="isbn" />
+            <!-- </span> -->
+
+            <button>Upload</button>
+        </form>
+
+        <p>
+            <div class="authorMessage">{authorMessage}</div>
+            <div class="statusMessage">{statusMessage}</div>
+        </p>
+    </article>
 </GlobalLayout>
 
 <style>
+    article{
+        /* width: 50%; */
+    }
+
     form {
         display: grid;
+        grid-template-columns: 70px auto;
+        gap: 4px;
     }
+
+    input {
+        max-width: 400px;
+    }
+
+    #isbn {
+        max-width: 100px;
+    }
+
     button {
-        width: 200px;
+        margin-top: 10px;
+        width: 68px;
+    }
+
+    .authorMessage {
+        color: firebrick;
     }
 </style>

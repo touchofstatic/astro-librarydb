@@ -7,11 +7,11 @@ const authors = await db.select().from(Author);
 ---
 
 <GlobalLayout>
-    <p>
+    <p class="author-warning">
         This page is for managing author records. <br />
         Not to accessed by users.
     </p>
-    
+
     <ul>
         {
             authors.map(({ id, name }) => (
@@ -22,3 +22,9 @@ const authors = await db.select().from(Author);
         }
     </ul>
 </GlobalLayout>
+
+<style>
+    .author-warning {
+        color: firebrick;
+    }
+</style>

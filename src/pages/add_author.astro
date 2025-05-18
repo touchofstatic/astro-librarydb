@@ -47,7 +47,7 @@ if (Astro.request.method === "POST") {
 ---
 
 <GlobalLayout>
-    <p>
+    <p class="author-warning">
         This page is for managing author records. <br />
         Not to accessed by users.
     </p>
@@ -60,10 +60,10 @@ if (Astro.request.method === "POST") {
         >
     </p>
 
-    <form method="POST">
-        <!-- client side validation attributes -->
-        <label>
-            Name:
+    <article>
+        <form method="POST" autocomplete="off">
+            <!-- client side validation attributes -->
+            <label> Author: </label>
             <input
                 type="text"
                 name="name"
@@ -71,9 +71,31 @@ if (Astro.request.method === "POST") {
                 minlength="1"
                 maxlength="100"
             />
-        </label>
-        <button>Submit</button>
-    </form>
 
-    <p id="message">{message}</p>
+            <button>Submit</button>
+        </form>
+
+        <p id="message">{message}</p>
+    </article>
 </GlobalLayout>
+
+<style>
+    .author-warning {
+        color: firebrick;
+    }
+
+    form {
+        display: grid;
+        grid-template-columns: 70px auto;
+        gap: 4px;
+    }
+
+    input {
+        max-width: 200px;
+    }
+
+    button {
+        margin-top: 10px;
+        width: 68px;
+    }
+</style>

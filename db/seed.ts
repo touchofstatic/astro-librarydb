@@ -64,7 +64,7 @@ export default async function seed() {
 		},
 
 		{
-			title: "book - author case insensitive search. Deprecated: author names are unique and case insensitive",
+			title: "book - author case insensitive search. deprecated: author names are unique and case insensitive",
 			authorId: 5,
 			isbn: "0065"
 		},
